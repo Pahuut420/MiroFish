@@ -1,0 +1,16 @@
+name: Sync fork
+on:
+  schedule:
+    - cron: "0 3 * * *"   # taeglich 3 Uhr UTC
+  workflow_dispatch:       # manueller Button im UI
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh repo sync ${{ github.repository }} -b main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
